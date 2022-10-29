@@ -5,3 +5,5 @@ router.get('/details', (req,res)=> {
         title: 'Profile details'
     })
 })
+
+module.exports = router;

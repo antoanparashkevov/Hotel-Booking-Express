@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const {login, register} = require('../services/authService')
 const {parseError} = require("../util/parser");
+const validator = require('validator');
 
 router.get('/register', (req,res) => {
     res.render('pages/register', {
@@ -14,12 +15,15 @@ router.post('/register', async (req,res) => {
         console.log('formData from the register form >>> ', formData)
     
         try {
+            if(validator.isEmail(formData.email)) {
+                throw new Error('Email is not valid!');
+            }
             //TODO change the error handling to correspond to the assignment
             if (formData.password !== formData.repass) {
                 throw new Error("The password doesn't match!")
             }
     
-            if (!formData.username || !formData.password || !formData.repass || !formData.email) {
+            if (!formData.username || !formData.password || !formData.repass) {
                 throw new Error("All fields are required!")
             }
     

@@ -6,13 +6,14 @@ const userSchema = new Schema({
     email: {
       type: String,
       required: true,
-      unique: true,  
+      unique: true,
+      match: [/^[a-zA-Z0-9]+$/i,'Email may contain only english letters and numbers']
     },
     username: {
         type: String,
         required: true,
         unique: true,
-        minlength: [3, 'Username must be at least 3 symbols']
+        match: [/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/i,'Username may contain only english letters and numbers']
     },
     hashedPassword: {
         type: String,
