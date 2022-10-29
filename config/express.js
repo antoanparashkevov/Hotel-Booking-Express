@@ -20,7 +20,7 @@ module.exports = (app) => {
     app.use(cookieParser());
     
     //Application Middlewares
-    app.use(titleMiddleware('Default page'));
+    app.use(titleMiddleware('BookingUni'));
     app.use(session());
     app.use(trim('password'));
 }
