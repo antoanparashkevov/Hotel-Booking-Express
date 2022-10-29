@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
-//TODO replace with the database name from the assignment
-const CONNECTION_STRING = 'mongodb://localhost:27017/scaffold'
+const CONNECTION_STRING = 'mongodb://localhost:27017/hotel-booking'
 
 module.exports = async () => {
     try {

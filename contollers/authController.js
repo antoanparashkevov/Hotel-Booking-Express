@@ -3,7 +3,6 @@ const {login, register} = require('../services/authService')
 const {parseError} = require("../util/parser");
 
 router.get('/register', (req,res) => {
-    //TODO replace with actual with as in the assignment
     res.render('pages/register', {
         title: 'Register page'
     })
