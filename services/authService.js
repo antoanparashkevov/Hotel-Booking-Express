@@ -6,10 +6,15 @@ const JWT_SECRET = 'keygen';
 
 async function register(username, email, password) {
     const existingUser = await User.findOne({username}).collation({strength: 2, locale: 'en'})//case-insensitive, english words
-  
     if(existingUser) {
         throw new Error('Username is already taken! Try again with different one!')      
+    }  
+    
+    const existingEmail = await User.findOne({email}).collation({strength: 2, locale: 'en'})//case-insensitive, english words
+    if(existingEmail) {
+        throw new Error('Email is already taken! Try again with different one!')      
     }
+    
     const hashedPassword = await bcrypt.hash(password, 10);
     
     const userData = await User.create({
@@ -25,7 +30,7 @@ async function register(username, email, password) {
     
 }
 
-async function login(username,email, password) {
+async function login(username, password) {
     const user = await User.findOne({username }).collation({locale: 'en', strength: 2})
     if(!user) {
         throw new Error('Incorrect username or password');
@@ -42,7 +47,6 @@ async function login(username,email, password) {
     return createSession(user)
 }
 
-//TODO logout action will be located in the controller, not here.
 
 function createSession({_id, username,email}) {
     //returns the token

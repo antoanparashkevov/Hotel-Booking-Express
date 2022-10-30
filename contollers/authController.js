@@ -15,9 +15,9 @@ router.post('/register', async (req,res) => {
         console.log('formData from the register form >>> ', formData)
     
         try {
-            if(validator.isEmail(formData.email)) {
-                throw new Error('Email is not valid!');
-            }
+            // if(validator.isEmail(formData.email)) {
+            //     throw new Error('Email is not valid!');
+            // }
             //TODO change the error handling to correspond to the assignment
             if (formData.password !== formData.repass) {
                 throw new Error("The password doesn't match!")
@@ -65,12 +65,12 @@ router.post('/login', async (req,res) => {
     try {
         //TODO change the error handling to correspond to the assignment
 
-        if (!formData.username || !formData.password || !formData.email) {
+        if (!formData.username || !formData.password) {
             throw new Error("All fields are required!")
         }
         
         //the json web token
-        const token = await login(formData.username, formData.email, formData.password);
+        const token = await login(formData.username, formData.password);
 
         //set as a cookie our JSON Web Token
         res.cookie('token', token);
