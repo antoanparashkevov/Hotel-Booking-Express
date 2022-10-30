@@ -27,14 +27,19 @@
         <div class="left-container">
             <ul>
                 <li><a href="/">Home</a></li>
+                {{#if username}}
                 <li><a href="/create">Add +</a></li>
+                {{else}}
                 <li><a href="/auth/login">Login</a></li>
                 <li><a href="/auth/register">Register</a></li>
+                {{/if}}
             </ul>
         </div>
         <div class="right-container">
-            <a href="/profile/details" class="log-out">Placeholder{{name}}</a>
-            <a href="/auth/logout" class="log-out">Logout</a>
+        {{#if username}}
+        <a href="/profile/details" class="log-out">{{username}}</a>
+        <a href="/auth/logout" class="log-out">Logout</a>   
+        {{/if}}
         </div>
     </nav>
     
