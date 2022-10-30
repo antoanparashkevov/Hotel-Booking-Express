@@ -15,10 +15,12 @@ router.post('/register', async (req,res) => {
         console.log('formData from the register form >>> ', formData)
     
         try {
-            // if(validator.isEmail(formData.email)) {
-            //     throw new Error('Email is not valid!');
-            // }
-            //TODO change the error handling to correspond to the assignment
+            if(validator.isEmail(formData.email) === false) {
+                throw new Error('The email is not valid!')
+            }
+            if(formData.password.length < 5) {
+                throw new Error("The password must be at least 5 characters long!")
+            }
             if (formData.password !== formData.repass) {
                 throw new Error("The password doesn't match!")
             }
@@ -28,7 +30,6 @@ router.post('/register', async (req,res) => {
             }
     
             //the json web token
-            //TODO see the assignment if the registration will create the user session
             const token = await register(formData.username, formData.email, formData.password);
     
             //set as a cookie our JSON Web Token
@@ -63,8 +64,6 @@ router.post('/login', async (req,res) => {
     console.log('formData from the login form >>> ', formData)
 
     try {
-        //TODO change the error handling to correspond to the assignment
-
         if (!formData.username || !formData.password) {
             throw new Error("All fields are required!")
         }
@@ -80,12 +79,10 @@ router.post('/login', async (req,res) => {
     } catch (error) {
         const errors = parseError(error);
 
-        //TODO add error display to the actual template from the assignment
         res.render('pages/login', {
             title: 'Login page',
             errors,
             body: {
-                email: formData.email,
                 username: formData.username
             }
         })

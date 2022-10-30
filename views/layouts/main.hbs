@@ -11,18 +11,17 @@
 
 <div id="container">
 
-<!--    TODO with real error handling-->
-<!--    <div>-->
-<!--        <div class="notification loadingBox">-->
-<!--            Loading &hellip -->
-<!--        </div>-->
-<!--        <div class="notification infoBox">-->
-<!--            <span>Info</span>-->
-<!--        </div>-->
-<!--        <div class="notification errorBox">-->
-<!--            <span>Error</span>-->
-<!--        </div>-->
-<!--    </div>-->
+    {{#if errors}}
+        
+    <div>
+        {{#each errors}}
+            <div class="notification errorBox">
+                <span>{{this}}</span>
+            </div>
+        {{/each}}
+    </div>
+    
+    {{/if}}
 
     <nav>
         <div class="left-container">
@@ -38,13 +37,7 @@
             <a href="/auth/logout" class="log-out">Logout</a>
         </div>
     </nav>
-
-    {{#if errors}}
-        <!-- an array full of strings, so we use this to render each element-->
-        {{#each errors}}
-            {{this}}
-        {{/each}}
-    {{/if}}
+    
 
    {{{body}}}
 
