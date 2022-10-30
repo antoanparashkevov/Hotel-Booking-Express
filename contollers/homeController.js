@@ -1,9 +1,12 @@
+const {getAll} = require("../services/hotelService");
 const router = require('express').Router();
 
-router.get('/', (req,res) => {
+router.get('/', async (req,res) => {
+    const allHotels = await getAll();
     res.render('pages/home', {
         title: 'Home page',
-        user: req.user
+        user: req.user,
+        hotels: allHotels
     })
 })
 
