@@ -14,6 +14,9 @@ router.post('/', async (req,res)=>{
    console.log('Entered data during the creation process >>> ', formData)
     
     try{
+       if(Object.values(formData).some(v=> !v )) {
+           throw new Error('All fields are required!')
+       }
        await create(formData);
        res.redirect('/')
     }catch (error){
