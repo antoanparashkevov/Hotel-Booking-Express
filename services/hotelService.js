@@ -25,7 +25,7 @@ async function update(hotelId, hotelData) {
 }
 
 async function deleteById(hotelId) {
-    
+    await Hotel.findByIdAndRemove(hotelId)
 }
 
 async function book(hotelId, userId) {
