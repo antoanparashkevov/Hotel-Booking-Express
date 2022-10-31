@@ -13,8 +13,15 @@ async function create(hotelData) {
 }
 
 async function update(hotelId, hotelData) {
-
+   const hotel = await getById(hotelId)
+    
+    hotel.name = hotelData.name
+    hotel.city = hotelData.city
+    hotel.imageUrl = hotelData.imageUrl
+    hotel.rooms = hotelData.rooms
+    
    
+    await hotel.save();
 }
 
 async function deleteById(hotelId) {
