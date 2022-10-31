@@ -1,6 +1,6 @@
 const {getById, update} = require("../services/hotelService");
 const router = require('express').Router();
-const parseError = require('../util/parser')
+const {parseError} = require('../util/parser')
 
 router.get('/:id/edit', async (req,res)=> {
     const hotelId = req.params.id
@@ -22,9 +22,10 @@ router.post('/:id/edit', async (req,res)=> {
             throw new Error('All fields are required!')
         }
         await update(hotelId,formData);
-        res.redirect('/hotel/' + hotelId + '/details' )
+        res.redirect('/hotel/' + hotelId)
     }catch (error){
         const errors = parseError(error)
+        formData._id = hotelId
         res.render('pages/edit',{
             title: 'An error occurred',
             hotel: formData,
@@ -32,8 +33,8 @@ router.post('/:id/edit', async (req,res)=> {
         })
     }})
 
-router.post('/:id/delete', (req,res)=> {
-    //TODO handle a post request..
+router.post('/:id/delete', async (req,res)=> {
+    
 })
 
 module.exports = router;

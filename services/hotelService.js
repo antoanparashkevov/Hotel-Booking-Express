@@ -13,7 +13,7 @@ async function create(hotelData) {
 }
 
 async function update(hotelId, hotelData) {
-   const hotel = await getById(hotelId)
+   const hotel = await Hotel.findById(hotelId)
     
     hotel.name = hotelData.name
     hotel.city = hotelData.city
