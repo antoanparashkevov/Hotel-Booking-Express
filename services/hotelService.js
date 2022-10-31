@@ -8,6 +8,10 @@ const getById = (id) => {
     return Hotel.findById(id).lean();
 }
 
+const findByBookingUser = (userId) => {
+    return Hotel.find({booking: userId}).lean();
+}
+
 async function create(hotelData) {
     await Hotel.create(hotelData)
 }
@@ -44,5 +48,6 @@ module.exports = {
     create,
     update,
     deleteById,
-    book
+    book,
+    findByBookingUser
 }
