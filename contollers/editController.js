@@ -1,4 +1,4 @@
-const {getById, update, deleteById} = require("../services/hotelService");
+const {getById, update, deleteById, book} = require("../services/hotelService");
 const router = require('express').Router();
 const {parseError} = require('../util/parser')
 
@@ -54,6 +54,29 @@ router.get('/:id/delete', async (req,res)=> {
     
     await deleteById(hotelId)
     res.redirect('/')
+})
+
+router.get('/:id/book', async (req,res)=> {
+    const hotelId = req.params.id;
+    const userId = req.user._id;
+    const hotel = await getById(hotelId)
+
+    try {
+        if (hotel.owner === req.user._id) {
+            hotel.isOwner = true;
+           throw new Error('Cannot book your own hotel!')
+        }
+        await book(hotelId,userId)
+        res.redirect(`/hotel/${hotelId}`)
+    }catch (error){ 
+        const errors = parseError(error);
+        res.render('pages/details', {
+            title: 'Details page',
+            errors,
+            hotel
+        })
+    }
+
 })
 
 module.exports = router;

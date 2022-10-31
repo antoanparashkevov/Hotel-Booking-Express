@@ -29,7 +29,13 @@ async function deleteById(hotelId) {
 }
 
 async function book(hotelId, userId) {
-
+    const hotel = await Hotel.findById(hotelId);
+    const isBooked = hotel.booking.includes(userId)
+    if(isBooked){
+        throw new Error('You already have booked this hotel!')
+    }
+    hotel.booking.push(userId)
+    await hotel.save();
 }
 
 module.exports = {

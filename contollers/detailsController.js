@@ -6,21 +6,23 @@ router.get('/:id', async (req,res) => {
     const hotel = await getById(hotelId)
     let canBook = true;
     let isOwner = false;
-        if(hotel) {
-            
-            if(hotel.booking.some(id=>id=== req.user._id) || req.user._id === hotel.owner) {
+    let noUser = false;
+        if(hotel && req.user) {
+            if(hotel.booking.map(i=>i.toString()).includes(req.user._id.toString())) {
                 canBook = false;
-            }
-            
-            if(req.user._id === hotel.owner) {
+            } else if(req.user._id === hotel.owner) {
                 isOwner = true;
             }
             
+            
+        } else {
+            canBook = false;
+            noUser = true;
         }
         hotel.canBook = canBook;
         hotel.isOwner = isOwner;
-    console.log(req.user._id === hotel.owner)
-    res.render('pages/details',  {
+        hotel.noUser = noUser;
+         res.render('pages/details',  {
         title: 'Hotel Details',
         hotel
     })
