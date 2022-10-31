@@ -66,6 +66,11 @@ router.get('/:id/book', async (req,res)=> {
             hotel.isOwner = true;
            throw new Error('Cannot book your own hotel!')
         }
+
+        const isBooked = hotel.booking.map(id=>id.toString()).includes(userId.toString())
+        if(isBooked){
+            throw new Error('You already have booked this hotel!')
+        }
         await book(hotelId,userId)
         res.redirect(`/hotel/${hotelId}`)
     }catch (error){ 
